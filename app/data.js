@@ -6,17 +6,15 @@ export const NAV = [
   {
     section: 'Мой бизнес',
     items: [
-      { id: 'crm', label: 'CRM и клиенты', icon: 'crm' },
-      { id: 'orders', label: 'Заказы', icon: 'orders' },
+      { id: 'business', label: 'Управление бизнесом', icon: 'crm' },
       { id: 'analytics', label: 'Аналитика', icon: 'analytics' },
-      { id: 'tasks', label: 'Задачи и календарь', icon: 'calendar' },
+      { id: 'tasks', label: 'Мои дела', icon: 'calendar' },
     ],
   },
   {
     section: 'Маркетинг',
     items: [
-      { id: 'growth', label: 'Привлечение клиентов', icon: 'megaphone' },
-      { id: 'comms', label: 'Рассылки', icon: 'comms' },
+      { id: 'growth', label: 'Продвижение', icon: 'megaphone' },
     ],
   },
   {

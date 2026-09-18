@@ -582,7 +582,7 @@ function Growth({ ctx }) {
   const p = usePeriod('month')
   const pi = periodInfo(p)
   return (
-    <SectionShell title="Привлечение клиентов" sub="Целевые действия: где взять новых клиентов и как вернуть старых" ctx={ctx}
+    <SectionShell title="Продвижение" sub="Целевые действия: где взять новых клиентов и как вернуть старых" ctx={ctx}
       actions={<>
         <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('mkt')}>Аналитика кампаний</button>
         <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('audience')}>Профиль клиента</button>
@@ -1449,7 +1449,7 @@ function Tasks({ ctx }) {
     setText('')
   }
   return (
-    <SectionShell title="Задачи" sub="Планы по бизнесу — ничего не потеряется" ctx={ctx}
+    <SectionShell title="Мои дела" sub="Планы по бизнесу — ничего не потеряется" ctx={ctx}
       actions={<button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('calendar')}>Календарь →</button>}>
       <div className="card" style={{ marginTop: 18 }}>
         <div className="crm-controls" style={{ marginTop: 0 }}>
@@ -1906,9 +1906,38 @@ function ConnectHub({ ctx }) {
   )
 }
 
+/* ═══ Управление бизнесом: CRM и клиенты + Заказы под одной крышей ═══ */
+function BusinessHub({ ctx }) {
+  const [tab, setTab] = useState('crm')
+  return (
+    <div>
+      <div className="seg-tabs hub-tabs">
+        <button className={tab === 'crm' ? 'active' : ''} onClick={() => setTab('crm')}>CRM и клиенты</button>
+        <button className={tab === 'orders' ? 'active' : ''} onClick={() => setTab('orders')}>Заказы</button>
+      </div>
+      {tab === 'crm' ? <Crm ctx={ctx} /> : <Orders ctx={ctx} />}
+    </div>
+  )
+}
+
+/* ═══ Продвижение: кампании + рассылки под одной крышей ═══ */
+function PromotionHub({ ctx }) {
+  const [tab, setTab] = useState('growth')
+  return (
+    <div>
+      <div className="seg-tabs hub-tabs">
+        <button className={tab === 'growth' ? 'active' : ''} onClick={() => setTab('growth')}>Кампании</button>
+        <button className={tab === 'comms' ? 'active' : ''} onClick={() => setTab('comms')}>Рассылки</button>
+      </div>
+      {tab === 'growth' ? <Growth ctx={ctx} /> : <Comms ctx={ctx} />}
+    </div>
+  )
+}
+
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
-  analytics: Analytics, growth: Growth, promos: Promos, services: Services, premium: Premium,
+  business: BusinessHub,
+  analytics: Analytics, growth: PromotionHub, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
   loyalty: Loyalty, xpay: Xpay, one: One, team: Team, connect: ConnectHub,
