@@ -176,7 +176,7 @@ function Orders({ ctx }) {
       {form && <FormModal title="Новый заказ" sub="Заказ появится в списке со статусом «Новый»"
         fields={[
           { label: 'Клиент', type: 'select', options: CLIENTS.map((c) => c.name) },
-          { label: 'Состав заказа', type: 'textarea', placeholder: 'Например: хлеб бородинский ×2, круассан ×4' },
+          { label: 'Состав заказа', type: 'textarea', placeholder: 'Например: окрашивание в один тон + укладка' },
           { label: 'Сумма, ₽', placeholder: '0' },
         ]}
         submitLabel="Создать" successText="Заказ создан и передан на кухню."
@@ -1543,7 +1543,7 @@ function Mail({ ctx }) {
             <ul className="promo-list" style={{ maxWidth: 'none', marginTop: 12 }}>
               <li><span className="check">✓</span>«Праздник-Кейтеринг» ждёт подтверждения меню — черновик ответа готов, осталось нажать «Отправить».</li>
               <li><span className="check">✓</span>Оплата муки — до 28 августа. Могу создать перевод на 34 120 ₽ прямо сейчас.</li>
-              <li><span className="check">✓</span>Анетта просит «Медовик» к субботе — на кухне свободное окно в пятницу, можно подтверждать.</li>
+              <li><span className="check">✓</span>Анетта просит AirTouch к субботе — у Ирины свободное окно в пятницу, можно подтверждать.</li>
             </ul>
           </div>
         </>
