@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { icons, fmt, Ic, FormModal, ClientName, QueryBar, Spark } from './ui'
+import { Login } from './login'
 import { Section } from './sections'
 import { HOME_HINT } from './answers'
 import {
@@ -14,6 +15,12 @@ const DAY_LABELS = Array.from({ length: 26 }, (_, i) => `${8 + Math.floor(i / 2)
 const DASH_COLOR = { up: '#26a95c', down: '#e30611', warn: '#8F8FFF' }
 
 export default function Page() {
+  /* вход в приложение: пускаем в кабинет только после логина */
+  const [authed, setAuthed] = useState(false)
+  useEffect(() => {
+    try { if (localStorage.getItem('mtsb-auth') === '1') setAuthed(true) } catch { }
+  }, [])
+
   const [theme, setTheme] = useState('light')
   const [active, setActive] = useState('home')
   const [sideOpen, setSideOpen] = useState(false)
@@ -75,12 +82,13 @@ export default function Page() {
     return () => io.disconnect()
   }, [active])
 
-  // push-уведомление о кешбэке — на 15-й секунде просмотра
+  // push-уведомление о кешбэке — на 15-й секунде после входа
   const [pushOpen, setPushOpen] = useState(false)
   useEffect(() => {
+    if (!authed) return
     const t = setTimeout(() => setPushOpen(true), 15000)
     return () => clearTimeout(t)
-  }, [])
+  }, [authed])
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
@@ -143,6 +151,16 @@ export default function Page() {
   }
 
   const clientOrders = clientOpen ? ORDERS.filter((o) => o.client === clientOpen.name).slice(0, 3) : []
+
+  /* до входа показываем только экран авторизации */
+  if (!authed) {
+    return (
+      <Login onSuccess={(remember) => {
+        if (remember) { try { localStorage.setItem('mtsb-auth', '1') } catch { } }
+        setAuthed(true)
+      }} />
+    )
+  }
 
   return (
     <>
