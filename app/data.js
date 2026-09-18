@@ -23,6 +23,7 @@ export const NAV = [
     section: 'Сервисы',
     items: [
       { id: 'services', label: 'Сервисы для бизнеса', icon: 'segments' },
+      { id: 'scaling', label: 'Масштабирование', icon: 'target', badge: 'Новое', badgeClass: 'purple' },
     ],
   },
   {

@@ -13,6 +13,7 @@ import {
 } from './data'
 
 import { PromoCabinet } from './promo'
+import { ScalingCabinet } from './geo'
 
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
 
@@ -2195,7 +2196,7 @@ function BusinessHub({ ctx }) {
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
   business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners, accounts: AccountsHub,
-  analytics: Analytics, growth: PromoCabinet, promos: Promos, services: Services, premium: Premium,
+  analytics: Analytics, growth: PromoCabinet, scaling: ScalingCabinet, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
   loyalty: Loyalty, xpay: Xpay, one: One, team: Team, connect: ConnectHub,
