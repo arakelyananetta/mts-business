@@ -12,6 +12,8 @@ import {
   GOAL_CARDS, PROMO_CASES, PROMO_HELP, PROMO_TOOLS_OK,
 } from './data'
 
+import { PromoCabinet } from './promo'
+
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
 
 /* ═══ Временные фильтры: Сегодня / Год / Месяц / Период ═══
@@ -2190,139 +2192,10 @@ function BusinessHub({ ctx }) {
 }
 
 /* ═══ Продвижение: кампании + рассылки под одной крышей ═══ */
-/* ═══ Продвижение: полноценный кабинет запуска кампаний (интеграция по API) ═══ */
-function PromotionHub({ ctx }) {
-  const [tab, setTab] = useState('main')
-  const [toolTab, setToolTab] = useState('channels')
-  const [form, setForm] = useState(null)
-  const [aiText, setAiText] = useState('')
-  const aiCreate = () => {
-    setForm({ chans: ['sms', 'tg'], tab: 'channels' })
-    if (aiText.trim()) ctx.ping('ИИ собрал черновик кампании по вашему описанию — проверьте настройки')
-  }
-  return (
-    <div>
-      <div className="seg-tabs hub-tabs" style={{ maxWidth: 680 }}>
-        <button className={tab === 'main' ? 'active' : ''} onClick={() => setTab('main')}>Кабинет</button>
-        <button className={tab === 'comms' ? 'active' : ''} onClick={() => setTab('comms')}>Рассылки и звонки</button>
-        <button className={tab === 'ads' ? 'active' : ''} onClick={() => setTab('ads')}>Реклама в интернете</button>
-        <button className={tab === 'stats' ? 'active' : ''} onClick={() => setTab('stats')}>Статистика</button>
-      </div>
-      {tab === 'comms' && <Comms ctx={ctx} />}
-      {tab === 'ads' && <Growth ctx={ctx} />}
-      {tab === 'stats' && <MktAnalytics ctx={ctx} />}
-      {tab === 'main' && (
-        <div>
-          <div className="pc-head">
-            <div>
-              <h1 className="pc-title">Продвижение</h1>
-              <p className="block-sub">Реклама и рассылки для салона — все инструменты в одном кабинете</p>
-            </div>
-            <div className="pc-balance">
-              <div>
-                <div className="s-label">Баланс кампаний</div>
-                <b>24 600 ₽</b>
-              </div>
-              <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('payments')}>Пополнить</button>
-            </div>
-          </div>
-
-          <div className="pc-ai">
-            {icons.spark}
-            <input value={aiText} onChange={(e) => setAiText(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && aiCreate()}
-              placeholder="Опишите, что продвигаем — например: маникюр в будни со скидкой 15%" />
-            <button className="pc-ai-btn" onClick={aiCreate}>Создать с ИИ</button>
-          </div>
-
-          <div className="pc-grid">
-            <div className="col">
-              <section className="card">
-                <h2 className="block-title" style={{ fontSize: 17 }}>Инструменты</h2>
-                <div className="seg-tabs" style={{ marginTop: 12, maxWidth: 420 }}>
-                  <button className={toolTab === 'channels' ? 'active' : ''} onClick={() => setToolTab('channels')}>По каналам</button>
-                  <button className={toolTab === 'goals' ? 'active' : ''} onClick={() => setToolTab('goals')}>По целям</button>
-                </div>
-                <div className="pc-tools">
-                  {toolTab === 'channels'
-                    ? CHANNELS.map((c) => (
-                      <button key={c.id} className="pc-tool" onClick={() => setForm({ chans: [c.id], tab: 'channels' })}>
-                        <b>{c.name}</b>
-                        <span className="pc-price">{c.price}</span>
-                        <i>{c.hint}</i>
-                        <span className="pc-tool-ico">{icons[c.icon]}</span>
-                        <span className="pc-arrow">→</span>
-                      </button>
-                    ))
-                    : GOAL_CARDS.map(([g, hint]) => (
-                      <button key={g} className="pc-tool" onClick={() => setForm({ chans: ['sms'], tab: 'goals' })}>
-                        <b>{g}</b>
-                        <i>{hint}</i>
-                        <span className="pc-arrow">→</span>
-                      </button>
-                    ))}
-                </div>
-              </section>
-
-              <section className="card">
-                <div className="list-head">
-                  <h2 className="block-title" style={{ fontSize: 17 }}>Успешные кейсы</h2>
-                  <span className="chip green">медиа</span>
-                </div>
-                <div className="pc-cases">
-                  {PROMO_CASES.map(([title, date]) => (
-                    <div key={title} className="pc-case">
-                      <b onClick={() => ctx.ping('Кейс откроется в новом окне (демо)')}>{title}</b>
-                      <span>{date}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            <div className="col">
-              <section className="pc-banner">
-                <span className="tag">🎙 Лёгкий старт</span>
-                <h3>Обзор возможностей кабинета</h3>
-                <p>Рассказываем, как запускать рекламу и рассылки прямо из МТС Бизнеса</p>
-                <button className="pc-banner-btn" onClick={() => ctx.ping('Видео-обзор откроется в новом окне (демо)')} aria-label="Смотреть обзор">→</button>
-              </section>
-
-              <section className="card">
-                <div className="list-head">
-                  <h3 className="block-title" style={{ fontSize: 16 }}>Профиль подтверждён</h3>
-                  <span className="chip green">ИП</span>
-                </div>
-                <p className="block-sub">Салон красоты «Viron» · ИП Сиванев В.А. — можно запускать рекламу</p>
-                <p className="block-sub" style={{ marginTop: 10, fontWeight: 700, color: 'var(--text)' }}>Доступны 8 сервисов и инструментов:</p>
-                <ul className="promo-list" style={{ maxWidth: 'none', marginTop: 10 }}>
-                  {PROMO_TOOLS_OK.map((t) => <li key={t}><span className="check">✓</span>{t}</li>)}
-                </ul>
-              </section>
-
-              <section className="card">
-                <h3 className="block-title" style={{ fontSize: 16 }}>Помощь</h3>
-                {PROMO_HELP.map((h) => (
-                  <button key={h} className="pc-help-row" onClick={() => ctx.ping(`«${h}» — справка откроется в новом окне (демо)`)}>{h}</button>
-                ))}
-                <div className="modal-actions" style={{ marginTop: 14 }}>
-                  <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.ping('Справочный центр — в разработке (демо)')}>Справка</button>
-                  <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.ping('Напишите в чат в сайдбаре — поможем с запуском')}>Поддержка</button>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      )}
-      {form && <CampaignLauncher ctx={ctx} onClose={() => setForm(null)} initChans={form.chans} initTab={form.tab} />}
-    </div>
-  )
-}
-
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
   business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners, accounts: AccountsHub,
-  analytics: Analytics, growth: PromotionHub, promos: Promos, services: Services, premium: Premium,
+  analytics: Analytics, growth: PromoCabinet, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
   loyalty: Loyalty, xpay: Xpay, one: One, team: Team, connect: ConnectHub,
@@ -2335,3 +2208,5 @@ export function Section({ id, ctx }) {
   const C = REGISTRY[id]
   return C ? <C ctx={ctx} /> : null
 }
+
+export { CampaignLauncher }
