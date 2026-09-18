@@ -14,6 +14,7 @@ import {
 
 import { PromoCabinet } from './promo'
 import { ScalingCabinet } from './geo'
+import { BizCabinet } from './biz'
 
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
 
@@ -2178,24 +2179,11 @@ function AccountsHub({ ctx }) {
   )
 }
 
-/* ═══ Управление бизнесом: CRM и клиенты + Заказы под одной крышей ═══ */
-function BusinessHub({ ctx }) {
-  const [tab, setTab] = useState('crm')
-  return (
-    <div>
-      <div className="seg-tabs hub-tabs">
-        <button className={tab === 'crm' ? 'active' : ''} onClick={() => setTab('crm')}>CRM и клиенты</button>
-        <button className={tab === 'orders' ? 'active' : ''} onClick={() => setTab('orders')}>Заказы</button>
-      </div>
-      {tab === 'crm' ? <Crm ctx={ctx} /> : <Orders ctx={ctx} />}
-    </div>
-  )
-}
 
 /* ═══ Продвижение: кампании + рассылки под одной крышей ═══ */
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
-  business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners, accounts: AccountsHub,
+  business: BizCabinet, statements: Statements, docflow: Docflow, partners: Partners, accounts: AccountsHub,
   analytics: Analytics, growth: PromoCabinet, scaling: ScalingCabinet, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
