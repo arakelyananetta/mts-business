@@ -576,7 +576,7 @@ function CampaignLauncher({ ctx, onClose }) {
   )
 }
 
-/* ═══ Привлечение клиентов ═══ */
+/* ═══ Продвижение ═══ */
 function Growth({ ctx }) {
   const [form, setForm] = useState(false)
   const p = usePeriod('month')
