@@ -180,13 +180,17 @@ export default function Page() {
           <span className="sub-chip">Активна</span>
         </button>
         <div className="account" onClick={() => setProfileOpen(true)}>
-          <div className="avatar">ИА</div>
+          <div className="avatar">V</div>
           <div className="account-texts">
-            <div className="account-name">Пекарня «Хлеб да Соль»</div>
+            <div className="account-name">Салон красоты «Viron»</div>
             <div className="account-sub">ИП Сиванев В.А.</div>
           </div>
           <span className="chevron"><Ic size={16}><path d="m6 9 6 6 6-6" /></Ic></span>
         </div>
+        <button className="icon-btn logout-btn" aria-label="Выйти из личного кабинета" title="Выйти"
+          onClick={() => { try { localStorage.removeItem('mtsb-auth') } catch { } setAuthed(false) }}>
+          {icons.logout}
+        </button>
       </header>
 
       <div className={`shell${active === 'home' ? ' shell-home' : ''}`}>
@@ -338,10 +342,10 @@ export default function Page() {
         <div className="overlay" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>
           <div className="modal">
             <div className="modal-head">
-              <div className="avatar">ИА</div>
+              <div className="avatar">V</div>
               <div>
                 <div className="modal-title">ИП Сиванев Виталий Александрович</div>
-                <div className="modal-sub">Пекарня «Хлеб да Соль» · <span className="chip green" style={{ padding: '2px 8px' }}>Действующий</span></div>
+                <div className="modal-sub">Салон красоты «Viron» · <span className="chip green" style={{ padding: '2px 8px' }}>Действующий</span></div>
               </div>
               <button className="icon-btn modal-close" onClick={() => setProfileOpen(false)} aria-label="Закрыть">{icons.close}</button>
             </div>

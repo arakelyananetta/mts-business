@@ -51,6 +51,7 @@ export const icons = {
   spark: <Ic size={19}><path d="M12 3.5 13.8 9 19 10.8 13.8 12.6 12 18 10.2 12.6 5 10.8 10.2 9z" /><path d="M19 16.5 19.7 18.5 21.7 19.2 19.7 19.9 19 21.9 18.3 19.9 16.3 19.2 18.3 18.5z" /></Ic>,
   mic: <Ic size={19}><rect x="9" y="3.5" width="6" height="11" rx="3" /><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M8.5 21h7" /></Ic>,
   arrowUp: <Ic size={18}><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" /></Ic>,
+  logout: <Ic size={20}><path d="M14.5 8V5.5h-9v13h9V16" /><path d="M9.5 12h11M17.5 8.5 21 12l-3.5 3.5" /></Ic>,
   target: <Ic size={22}><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" /></Ic>,
   phone: <Ic size={22}><path d="M5 4.5h4l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5l1.5-2 4 1.5v4c-8.5.5-15-6-14.5-14.5z" /></Ic>,
   people: <Ic size={22}><circle cx="9" cy="8.5" r="3" /><path d="M3.8 19.5c.5-2.9 2.6-4.6 5.2-4.6s4.7 1.7 5.2 4.6" /><circle cx="16.8" cy="9.5" r="2.4" /><path d="M16 14.9c2.2.1 3.9 1.6 4.3 4" /></Ic>,

@@ -113,7 +113,6 @@ export function Login({ onSuccess }) {
               {err && <div className="login-err">{err}</div>}
               <button className="btn-red login-btn" onClick={submit}>Войти</button>
               <a className="login-link" onClick={() => goto('phone')}>Не могу войти</a>
-              <div className="login-hint">Демо-доступ: логин <b>business</b> · пароль <b>999999</b></div>
             </>
           )}
 

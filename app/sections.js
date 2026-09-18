@@ -8,6 +8,7 @@ import {
   REVENUE_SERIES, GROWTH_ACTIONS, KPIS, PROMOS, SERVICES,
   CHANNELS, GOALS, CITIES,
   MAIL_PROVIDERS, MAIL_INBOX, MAX_CHATS, CAL_PROVIDERS, CAL_EVENTS, ROLES,
+  STATEMENTS, REPORT_KINDS, DOCFLOW, PARTNERS,
 } from './data'
 
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
@@ -59,7 +60,7 @@ function TimeFilter({ p, withToday = false }) {
   )
 }
 
-/* ═══ CRM пекарни ═══ */
+/* ═══ CRM салона ═══ */
 function Crm({ ctx }) {
   const [q, setQ] = useState('')
   const [seg, setSeg] = useState('all')
@@ -67,7 +68,7 @@ function Crm({ ctx }) {
   const list = CLIENTS.filter((c) =>
     (seg === 'all' || c.seg.includes(seg)) && c.name.toLowerCase().includes(q.toLowerCase()))
   return (
-    <SectionShell title="CRM пекарни" sub="Управляйте клиентами и увеличивайте продажи" ctx={ctx}
+    <SectionShell title="CRM салона" sub="Управляйте клиентами и увеличивайте продажи" ctx={ctx}
       actions={<>
         <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('clients')}>Клиенты</button>
         <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('segments')}>Сегменты</button>
@@ -76,7 +77,7 @@ function Crm({ ctx }) {
       <StatRow stats={[
         ['Всего клиентов', '1 486', '+3 сегодня'],
         ['Повторные покупки', '42%', 'на сегодня'],
-        ['Клиент приносит за всё время', '6 840 ₽', 'на сегодня'],
+        ['Клиент приносит за всё время', '18 400 ₽', 'на сегодня'],
         ['Готовы рекомендовать вас', '72 из 100', 'на сегодня'],
       ]} />
       <div className="crm-controls">
@@ -135,13 +136,13 @@ function Orders({ ctx }) {
   const shown = list.slice(0, visible)
   const statuses = ['all', 'Новый', 'В работе', 'Выполнен', 'Отменён']
   return (
-    <SectionShell title="Заказы" sub="Все заказы пекарни" ctx={ctx}
+    <SectionShell title="Заказы" sub="Все заказы и записи салона" ctx={ctx}
       actions={<button className="btn-red" style={{ marginTop: 0 }} onClick={() => setForm(true)}>+ Новый заказ</button>}>
       <TimeFilter p={p} withToday />
       <StatRow labels={pi.labels} stats={[
-        ['Заказы', SC(2940, pi.k), pi.sub],
+        ['Визиты', SC(440, pi.k), pi.sub],
         ['Выручка', `${SC(1245000, pi.k)} ₽`, pi.sub],
-        ['Средний чек', '425 ₽', pi.sub],
+        ['Средний чек', '2 830 ₽', pi.sub],
         ['Отмены', SC(12, pi.k), 'меньше 1%', 'down'],
       ]} />
       <div className="chips-row" style={{ marginTop: 12 }}>
@@ -191,7 +192,7 @@ function Clients({ ctx }) {
   const all = CLIENTS.filter((c) => (c.name + c.phone).toLowerCase().includes(q.toLowerCase()))
   const list = all.slice(0, visible)
   return (
-    <SectionShell title="Клиенты" sub={`База клиентов пекарни — ${CLIENTS.length} последних показаны из 1 486`} ctx={ctx}
+    <SectionShell title="Клиенты" sub={`База клиентов салона — ${CLIENTS.length} последних показаны из 1 486`} ctx={ctx}
       actions={<button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('segments')}>Сегменты →</button>}>
       <div className="crm-controls">
         <div className="input-search">
@@ -286,7 +287,7 @@ function Comms({ ctx }) {
           { label: 'Город', type: 'select', options: CITIES },
           { label: 'Пол', type: 'select', options: ['Все', 'Женщины', 'Мужчины'] },
           { label: 'Возраст', type: 'select', options: ['Любой', '18–24', '25–34', '35–44', '45+'] },
-          { label: 'Текст сообщения', type: 'textarea', placeholder: 'Например: Только в выходные — скидка 15% на всю выпечку!' },
+          { label: 'Текст сообщения', type: 'textarea', placeholder: 'Например: Только в будни — скидка 15% на окрашивание!' },
         ]}
         submitLabel="Запустить" successText="Рассылка запланирована и скоро отправится."
         onClose={() => setForm(false)} ping={ctx.ping} />}
@@ -351,7 +352,7 @@ function Analytics({ ctx }) {
   if (mode === 'year') {
     stats = [
       ['Выручка', '11 840 000 ₽', '+31% к прошлому году'],
-      ['Заказы', '27 400', '+24% к прошлому году'],
+      ['Визиты', '4 100', '+24% к прошлому году'],
       ['Новые клиенты', '1 034', 'за 12 месяцев'],
       ['Средний чек', '418 ₽', '+6% за год'],
     ]
@@ -375,9 +376,9 @@ function Analytics({ ctx }) {
   } else {
     stats = [
       ['Выручка', '1 245 000 ₽', '+12% к июню'],
-      ['Заказы', '2 940', '+8% к июню'],
+      ['Визиты', '440', '+8% к июню'],
       ['Новые клиенты', '128', '+18% к июню'],
-      ['Средний чек', '425 ₽', '+7% к июню'],
+      ['Средний чек', '2 830 ₽', '+7% к июню'],
     ]
     series = REVENUE_SERIES; labels = undefined; chartSub = 'июль 2026'
   }
@@ -461,7 +462,7 @@ function Analytics({ ctx }) {
           <h3 className="block-title" style={{ fontSize: 16, marginTop: 22 }}>Воронка июля</h3>
           <div className="funnel">
             <div className="f-row"><div className="f-bar" style={{ width: '100%' }}>Посетители — 8 420</div></div>
-            <div className="f-row"><div className="f-bar" style={{ width: '62%', opacity: .85 }}>Сделали заказ — 2 940</div></div>
+            <div className="f-row"><div className="f-bar" style={{ width: '62%', opacity: .85 }}>Записались — 440</div></div>
             <div className="f-row"><div className="f-bar" style={{ width: '34%', opacity: .7 }}>Вернулись повторно — 310</div></div>
           </div>
         </div>
@@ -611,9 +612,9 @@ function Growth({ ctx }) {
       <T
         head={['Кампания', 'Канал', 'Статус', 'Показы', 'Клиенты', 'Расход']}
         rows={[
-          [<b>«Свежая выпечка рядом» · район Пекарской</b>, 'Баннеры + гео', chip(['Активна', 'green']), '112 400', '86', '15 200 ₽'],
-          [<b>«Торты на заказ» · поиск</b>, 'Поиск', chip(['Активна', 'green']), '48 700', '31', '7 100 ₽'],
-          [<b>«Завтраки у дома» · соцсети</b>, 'Соцсети', chip(['Пауза', 'orange']), '23 200', '11', '2 300 ₽'],
+          [<b>«Красота рядом» · Цветной бульвар</b>, 'Баннеры + гео', chip(['Активна', 'green']), '112 400', '86', '15 200 ₽'],
+          [<b>«Окрашивание AirTouch» · поиск</b>, 'Поиск', chip(['Активна', 'green']), '48 700', '31', '7 100 ₽'],
+          [<b>«Маникюр у дома» · соцсети</b>, 'Соцсети', chip(['Пауза', 'orange']), '23 200', '11', '2 300 ₽'],
         ]}
         onRow={() => ctx.ping('Детали кампании — статистика в разработке')}
       />
@@ -642,29 +643,29 @@ function MktAnalytics({ ctx }) {
         ['Показы', SC(184300, pi.k), pi.sub],
         ['Просмотры', SC(61400, pi.k), 'досматривают 33%'],
         ['Клики', SC(9215, pi.k), 'кликают 5,0%'],
-        ['Покупки', SC(1108, pi.k), 'конверсия 12%'],
+        ['Записи', SC(168, pi.k), 'конверсия 1,8%'],
       ]} />
       <StatRow labels={pi.labels} stats={[
         ['Цена 1 000 показов', '133 ₽', pi.sub],
         ['Цена клика', '2,67 ₽', pi.sub],
-        ['Цена одной покупки', '22,2 ₽', pi.sub],
+        ['Цена одной записи', '146 ₽', pi.sub],
         ['Реклама окупается', '×3,1', 'на каждый вложенный рубль'],
       ]} />
       <div className="card" style={{ marginTop: 18 }}>
         <h3 className="block-title" style={{ fontSize: 16 }}>Воронка кампаний</h3>
         <p className="block-sub">Показ → просмотр → клик → покупка · {pi.sub}</p>
         <div className="funnel">
-          {[[`Показы — ${SC(184300, pi.k)}`, 100], [`Просмотры — ${SC(61400, pi.k)}`, 68], [`Клики — ${SC(9215, pi.k)}`, 40], [`Покупки — ${SC(1108, pi.k)}`, 20]].map(([t, w], i) => (
+          {[[`Показы — ${SC(184300, pi.k)}`, 100], [`Просмотры — ${SC(61400, pi.k)}`, 68], [`Клики — ${SC(9215, pi.k)}`, 40], [`Записи — ${SC(168, pi.k)}`, 20]].map(([t, w], i) => (
             <div key={t} className="f-row"><div className="f-bar" style={{ width: `${w}%`, opacity: 1 - i * 0.13 }}>{t}</div></div>
           ))}
         </div>
       </div>
       <T
-        head={['Кампания', 'Канал', 'Показы', 'Клики', 'Кликают', 'Цена клика', 'Покупки', 'Расход']}
+        head={['Кампания', 'Канал', 'Показы', 'Клики', 'Кликают', 'Цена клика', 'Записи', 'Расход']}
         rows={[
-          [<b>«Свежая выпечка рядом»</b>, 'Гео-баннеры', '112 400', '5 830', '5,2%', '2,61 ₽', '702', '15 200 ₽'],
-          [<b>«Торты на заказ»</b>, 'Поиск', '48 700', '2 610', '5,4%', '2,72 ₽', '318', '7 100 ₽'],
-          [<b>«Завтраки у дома»</b>, 'Telegram Ads', '23 200', '775', '3,3%', '2,97 ₽', '88', '2 300 ₽'],
+          [<b>«Красота рядом с домом»</b>, 'Гео-баннеры', '112 400', '5 830', '5,2%', '2,61 ₽', '96', '15 200 ₽'],
+          [<b>«Окрашивание AirTouch»</b>, 'Поиск', '48 700', '2 610', '5,4%', '2,72 ₽', '52', '7 100 ₽'],
+          [<b>«Маникюр у дома»</b>, 'Telegram Ads', '23 200', '775', '3,3%', '2,97 ₽', '20', '2 300 ₽'],
         ]}
         onRow={() => ctx.ping('Детальная статистика кампании — в разработке')}
       />
@@ -697,7 +698,7 @@ function Audience({ ctx }) {
     <SectionShell title="Профиль клиента" sub="Портрет аудитории по данным запущенных кампаний" ctx={ctx}>
       <TimeFilter p={p} withToday />
       <StatRow labels={pi.labels} stats={[
-        ['Средний чек из рекламы', '462 ₽', pi.sub],
+        ['Средний чек из рекламы', '3 050 ₽', pi.sub],
         ['Клиенты из кампаний', SC(128, pi.k), pi.sub],
         ['Доля женщин', '58%', 'ядро аудитории'],
         ['Средний возраст', '34', '25–44 — 65%'],
@@ -895,7 +896,7 @@ function Services({ ctx }) {
   }
 
   return (
-    <SectionShell title="Сервисы для бизнеса" sub="Экосистема МТС: сервисы, которые помогают пекарне расти" ctx={ctx}>
+    <SectionShell title="Сервисы для бизнеса" sub="Экосистема МТС: сервисы, которые помогают салону расти" ctx={ctx}>
       <div className="seg-grid three">
         {SERVICES.map((s) => (
           <div key={s.name} className="card seg-card svc-card" onClick={() => setSel(s)}>
@@ -1092,14 +1093,14 @@ function Acquiring({ ctx }) {
   const p = usePeriod('month')
   const pi = periodInfo(p)
   return (
-    <SectionShell title="Приём оплаты" sub="Оплата картами и по QR-коду в вашей пекарне" ctx={ctx}
+    <SectionShell title="Приём оплаты" sub="Оплата картами и по QR-коду в вашем салоне" ctx={ctx}
       actions={<button className="btn-red" style={{ marginTop: 0 }} onClick={() => setForm(true)}>+ Подключить терминал</button>}>
       <TimeFilter p={p} withToday />
       <StatRow labels={pi.labels} stats={[
         ['Оборот', `${SC(890400, pi.k)} ₽`, pi.sub],
         ['Комиссия', '1,1%', 'акция до конца августа'],
         ['Терминалов', '3', '2 онлайн'],
-        ['Средний чек по картам', '462 ₽', pi.sub],
+        ['Средний чек по картам', '3 050 ₽', pi.sub],
       ]} />
       <div className="offer-banner purple">
         <div>
@@ -1139,7 +1140,7 @@ function Credits({ ctx }) {
   const r = 0.115 / 12
   const pay = Math.round((sum * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1))
   return (
-    <SectionShell title="Деньги на развитие" sub="Финансирование для роста пекарни" ctx={ctx}
+    <SectionShell title="Деньги на развитие" sub="Финансирование для роста салона" ctx={ctx}
       actions={<button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('guarantees')}>Гарантии для сделок →</button>}>
       <div className="offer-banner">
         <div>
@@ -1171,7 +1172,7 @@ function Credits({ ctx }) {
           <p className="block-sub" style={{ marginBottom: 10 }}>У вас 1 действующая программа</p>
           <div className="tx-row" style={{ cursor: 'default' }}>
             <div>
-              <div className="tx-name">Финансирование оборудования · печь Miwe</div>
+              <div className="tx-name">Финансирование оборудования · лазерный аппарат</div>
               <div className="tx-desc">Выдан 10.02.2024 · ставка 12,8% · платёж 43 250 ₽/мес</div>
             </div>
             <div className="tx-right">
@@ -1384,7 +1385,7 @@ function Settings({ ctx }) {
         <div className="card">
           <h3 className="block-title" style={{ fontSize: 16 }}>Профиль</h3>
           <div className="form-grid">
-            <div className="field"><label>Название бизнеса</label><input defaultValue="Пекарня «Хлеб да Соль»" /></div>
+            <div className="field"><label>Название бизнеса</label><input defaultValue="Салон красоты «Viron»" /></div>
             <div className="field"><label>Телефон</label><input defaultValue="+7 (977) 945-88-90" /></div>
             <div className="field"><label>Email</label><input defaultValue="sivanev@hlebdasol.ru" /></div>
           </div>
@@ -1809,7 +1810,7 @@ function One({ ctx }) {
         </div>
         <div className="card seg-card">
           <div className="seg-top"><b>Усилитель сотовой связи</b><span className="chip blue">В подарок</span></div>
-          <p className="seg-desc" style={{ flex: 1 }}>Если в пекарне слабый сигнал — установим усилитель бесплатно. Касса, переводы и терминалы всегда онлайн.</p>
+          <p className="seg-desc" style={{ flex: 1 }}>Если в салоне слабый сигнал — установим усилитель бесплатно. Касса, переводы и терминалы всегда онлайн.</p>
           <button className="btn-gray" style={{ marginTop: 12 }} onClick={() => ctx.ping('Заявка на усилитель принята — инженер позвонит сегодня (демо)')}>Заказать установку</button>
         </div>
         <div className="card seg-card">
@@ -1906,6 +1907,259 @@ function ConnectHub({ ctx }) {
   )
 }
 
+/* ═══ Выписки и отчёты: документы салона красоты ═══ */
+function Statements({ ctx }) {
+  const [docs, setDocs] = useState(STATEMENTS)
+  const [auto, setAuto] = useState(true)
+  const [acc, setAcc] = useState('Основной счёт · 0123456')
+  const makeStatement = () => {
+    setDocs((d) => [{ name: `Выписка по счёту (${acc.split(' · ')[0].toLowerCase()})`, period: 'сформирована сейчас', fmt: 'PDF', status: ['Готова', 'green'] }, ...d])
+    ctx.ping('Выписка сформирована — уже в списке документов')
+  }
+  return (
+    <SectionShell title="Выписки и отчёты" sub="Выписки по счёту и отраслевые отчёты салона красоты" ctx={ctx}>
+      <StatRow stats={[
+        ['Документов за месяц', '12', 'на сегодня'],
+        ['Среднее время выписки', '30 сек', 'формируется онлайн'],
+        ['Отчётов по мастерам', '4', 'за август'],
+        ['Отправлено бухгалтеру', '9', 'автоматически'],
+      ]} />
+      <div className="card" style={{ marginTop: 18 }}>
+        <h3 className="block-title" style={{ fontSize: 16 }}>Сформировать выписку</h3>
+        <p className="block-sub">Выберите счёт, период и формат — документ будет готов за полминуты</p>
+        <div className="two-col" style={{ marginTop: 4 }}>
+          <div className="field">
+            <label>Счёт</label>
+            <select className="select" style={{ width: '100%' }} value={acc} onChange={(e) => setAcc(e.target.value)}>
+              <option>Основной счёт · 0123456</option>
+              <option>Бизнес-карта МИР Supreme</option>
+              <option>Накопления «Доход на срок»</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Период</label>
+            <select className="select" style={{ width: '100%' }}>
+              <option>Август 2026 (по 21-е)</option>
+              <option>Июль 2026</option>
+              <option>2 квартал 2026</option>
+              <option>С начала года</option>
+            </select>
+          </div>
+        </div>
+        <div className="two-col" style={{ marginTop: 0 }}>
+          <div className="field">
+            <label>Формат</label>
+            <select className="select" style={{ width: '100%' }}>
+              <option>PDF — для печати и аренды</option>
+              <option>XLSX — для анализа</option>
+              <option>Выгрузка в 1С</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Куда отправить</label>
+            <select className="select" style={{ width: '100%' }}>
+              <option>Скачать в кабинете</option>
+              <option>Бухгалтеру — Ольге Николаевне</option>
+              <option>На email салона</option>
+            </select>
+          </div>
+        </div>
+        <button className="btn-red" style={{ marginTop: 4 }} onClick={makeStatement}>Сформировать выписку</button>
+      </div>
+      <div className="seg-grid three">
+        {REPORT_KINDS.map((r) => (
+          <div key={r.title} className="card seg-card">
+            <b>{r.title}</b>
+            <p className="seg-desc">{r.desc}</p>
+            <div style={{ marginTop: 10, flex: 1 }}>
+              {r.rows.map(([name, pct]) => (
+                <div key={name} className="bar-row">
+                  <span className="bar-label" style={{ width: 120, minWidth: 100, fontSize: 12 }}>{name}</span>
+                  <span className="bar-track"><i className="bar-fill" style={{ width: `${pct}%` }} /></span>
+                  <span className="bar-val">{pct}%</span>
+                </div>
+              ))}
+            </div>
+            <button className="btn-gray" style={{ marginTop: 12 }}
+              onClick={() => ctx.ping(`Отчёт «${r.title}» формируется — пришлём уведомление`)}>Сформировать отчёт</button>
+          </div>
+        ))}
+      </div>
+      <T
+        head={['Документ', 'Период', 'Формат', 'Статус', '']}
+        rows={docs.map((d) => [
+          <b>{d.name}</b>, d.period, d.fmt, chip(d.status),
+          <a className="link-inline" onClick={(e) => { e.stopPropagation(); ctx.ping(`«${d.name}» скачан (демо)`) }}>Скачать</a>,
+        ])}
+        onRow={() => ctx.ping('Документ открыт (демо)')}
+      />
+      <div className="settings-row" style={{ marginTop: 6 }}>
+        <div>
+          <div className="tx-name">Автоотправка бухгалтеру</div>
+          <div className="tx-desc">Каждое 1-е число — выписка и отчёт по направлениям на почту Ольги Николаевны</div>
+        </div>
+        <span className={`toggle${auto ? ' on' : ''}`} role="switch" aria-checked={auto}
+          onClick={() => { setAuto(!auto); ctx.ping(auto ? 'Автоотправка выключена' : 'Автоотправка включена') }} />
+      </div>
+    </SectionShell>
+  )
+}
+
+/* ═══ Документооборот: ЭДО салона — УПД, акты, договоры ═══ */
+function Docflow({ ctx }) {
+  const [docs, setDocs] = useState(DOCFLOW)
+  const [filter, setFilter] = useState('all')
+  const [signDoc, setSignDoc] = useState(null)
+  const [upload, setUpload] = useState(false)
+  const list = docs.filter((d) => filter === 'all'
+    || (filter === 'sign' && d.status[0] === 'На подписании')
+    || (filter === 'done' && ['Подписан', 'Оплачен'].includes(d.status[0]))
+    || (filter === 'wait' && d.status[0] === 'Ожидает контрагента'))
+  const toSign = docs.filter((d) => d.status[0] === 'На подписании').length
+  const confirmSign = () => {
+    setDocs((ds) => ds.map((d) => (d === signDoc ? { ...d, status: ['Подписан', 'green'] } : d)))
+    setSignDoc(null)
+    ctx.ping('Документ подписан КЭП и отправлен контрагенту')
+  }
+  return (
+    <SectionShell title="Документооборот" sub="Электронные документы с поставщиками и арендодателем — подписание КЭП в один клик" ctx={ctx}
+      actions={<button className="btn-red" style={{ marginTop: 0 }} onClick={() => setUpload(true)}>+ Загрузить документ</button>}>
+      <StatRow stats={[
+        ['На подписании', String(toSign), toSign ? 'требуют внимания' : 'всё подписано', toSign ? 'down' : undefined],
+        ['Входящих за месяц', '14', 'от 6 контрагентов'],
+        ['Подписано в августе', '9', 'без единой бумаги'],
+        ['Экономия времени', '~3 часа', 'в месяц на документах'],
+      ]} />
+      <div className="chips-row">
+        {[['all', 'Все'], ['sign', 'На подписании'], ['wait', 'Ожидают контрагента'], ['done', 'Подписанные']].map(([f, label]) => (
+          <button key={f} className={`filter-chip${filter === f ? ' active' : ''}`} onClick={() => setFilter(f)}>{label}</button>
+        ))}
+      </div>
+      <T
+        head={['Документ', 'Контрагент', 'Тип', 'Дата', 'Статус', '']}
+        rows={list.map((d) => [
+          <b>{d.name}</b>, d.from, d.kind, d.date, chip(d.status),
+          d.status[0] === 'На подписании'
+            ? <button className="btn-red" style={{ marginTop: 0, padding: '8px 14px', fontSize: 12.5 }}
+                onClick={(e) => { e.stopPropagation(); setSignDoc(d) }}>Подписать</button>
+            : <a className="link-inline" onClick={(e) => { e.stopPropagation(); ctx.ping(`«${d.name}» открыт (демо)`) }}>Открыть</a>,
+        ])}
+        onRow={() => ctx.ping('Документ открыт (демо)')}
+      />
+      {list.length === 0 && <p className="empty-note">В этом фильтре документов нет.</p>}
+      <div className="offer-banner" style={{ marginTop: 18 }}>
+        <div>
+          <b>Подключите 1С — документы будут улетать в учёт сами</b>
+          <p>УПД и акты из ЭДО попадут в 1С без ручного переноса. Настройка — в «Подключении сервисов».</p>
+        </div>
+        <button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('connect')}>Настроить</button>
+      </div>
+      {signDoc && (
+        <div className="overlay" onClick={(e) => e.target === e.currentTarget && setSignDoc(null)}>
+          <div className="modal" style={{ width: 480 }}>
+            <div className="modal-head">
+              <div>
+                <div className="modal-title">Подписание документа</div>
+                <div className="modal-sub">Квалифицированная электронная подпись</div>
+              </div>
+              <button className="icon-btn modal-close" onClick={() => setSignDoc(null)} aria-label="Закрыть">{icons.close}</button>
+            </div>
+            <div className="profile-grid">
+              <div className="profile-row"><span className="k">Документ</span><span className="v">{signDoc.name}</span></div>
+              <div className="profile-row"><span className="k">Контрагент</span><span className="v">{signDoc.from}</span></div>
+              <div className="profile-row"><span className="k">Подпись</span><span className="v">КЭП · ИП Сиванев В.А. · действует до 03.2027</span></div>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-red" style={{ marginTop: 0 }} onClick={confirmSign}>Подписать КЭП</button>
+              <button className="btn-gray" style={{ width: 'auto' }} onClick={() => setSignDoc(null)}>Отмена</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {upload && <FormModal title="Загрузить документ" sub="Документ уйдёт контрагенту через ЭДО"
+        fields={[
+          { label: 'Контрагент', type: 'select', options: PARTNERS.map((p) => p.name) },
+          { label: 'Тип документа', type: 'select', options: ['УПД', 'Акт', 'Договор', 'Счёт'] },
+          { label: 'Комментарий', type: 'textarea', placeholder: 'Например: акт за услуги августа' },
+        ]}
+        submitLabel="Отправить" successText="Документ отправлен контрагенту на подписание."
+        onClose={() => setUpload(false)} ping={ctx.ping} />}
+    </SectionShell>
+  )
+}
+
+/* ═══ Контрагенты: поставщики и партнёры салона ═══ */
+function Partners({ ctx }) {
+  const [list, setList] = useState(PARTNERS)
+  const [q, setQ] = useState('')
+  const [sel, setSel] = useState(null)
+  const [add, setAdd] = useState(false)
+  const shown = list.filter((p) => (p.name + p.cat + p.inn).toLowerCase().includes(q.toLowerCase()))
+  const verify = (p) => {
+    setList((ls) => ls.map((x) => (x.name === p.name ? { ...x, status: ['Надёжный', 'green'] } : x)))
+    setSel((s) => (s && s.name === p.name ? { ...s, status: ['Надёжный', 'green'] } : s))
+    ctx.ping('Проверка пройдена: долгов, судов и признаков однодневки не найдено')
+  }
+  return (
+    <SectionShell title="Контрагенты" sub="Поставщики, аренда и партнёры салона — с проверкой надёжности" ctx={ctx}
+      actions={<button className="btn-red" style={{ marginTop: 0 }} onClick={() => setAdd(true)}>+ Добавить контрагента</button>}>
+      <StatRow stats={[
+        ['Контрагентов', '7', 'активных'],
+        ['Оборот за год', '2,14 млн ₽', 'по всем контрагентам'],
+        ['На проверке', '1', 'рекомендуем проверить', 'down'],
+        ['Документов в ЭДО', '49', 'за всё время'],
+      ]} />
+      <div className="crm-controls">
+        <div className="input-search">
+          {icons.search}
+          <input placeholder="Поиск по названию, ИНН или категории" value={q} onChange={(e) => setQ(e.target.value)} />
+        </div>
+      </div>
+      <T
+        head={['Контрагент', 'ИНН', 'Категория', 'Оборот за год', 'Надёжность']}
+        rows={shown.map((p) => [<b>{p.name}</b>, p.inn, p.cat, p.turn, chip(p.status)])}
+        onRow={(i) => setSel(shown[i])}
+      />
+      {shown.length === 0 && <p className="empty-note">Никого не нашли по запросу «{q}».</p>}
+      {sel && (
+        <div className="overlay" onClick={(e) => e.target === e.currentTarget && setSel(null)}>
+          <div className="modal">
+            <div className="modal-head">
+              <div className="avatar">{sel.name.replace(/[«»]/g, '').slice(0, 1)}</div>
+              <div>
+                <div className="modal-title">{sel.name}</div>
+                <div className="modal-sub">{sel.cat} · {chip(sel.status)}</div>
+              </div>
+              <button className="icon-btn modal-close" onClick={() => setSel(null)} aria-label="Закрыть">{icons.close}</button>
+            </div>
+            <div className="profile-grid">
+              <div className="profile-row"><span className="k">ИНН</span><span className="v">{sel.inn}</span></div>
+              <div className="profile-row"><span className="k">Оборот за год</span><span className="v">{sel.turn}</span></div>
+              <div className="profile-row"><span className="k">Документов в ЭДО</span><span className="v">{sel.docs}</span></div>
+              <div className="profile-row"><span className="k">Проверка</span><span className="v">{sel.status[0] === 'Надёжный' ? 'Пройдена: долгов и судов не найдено' : 'Рекомендуем проверить перед оплатой'}</span></div>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-red" style={{ marginTop: 0 }} onClick={() => { setSel(null); ctx.go('payments'); ctx.ping(`Создайте перевод для «${sel.name}»`) }}>Создать перевод</button>
+              {sel.status[0] !== 'Надёжный' && (
+                <button className="btn-purple" style={{ marginTop: 0 }} onClick={() => verify(sel)}>Проверить контрагента</button>
+              )}
+              <button className="btn-gray" style={{ width: 'auto' }} onClick={() => { setSel(null); ctx.go('docflow') }}>Документы</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {add && <FormModal title="Новый контрагент" sub="Проверим по ИНН и подтянем реквизиты автоматически"
+        fields={[
+          { label: 'ИНН', placeholder: '10 или 12 цифр' },
+          { label: 'Название', placeholder: 'Например: «БьютиМаркет»' },
+          { label: 'Категория', type: 'select', options: ['Поставщик косметики', 'Расходники', 'Аренда', 'Обслуживание', 'Самозанятый мастер', 'Другое'] },
+        ]}
+        submitLabel="Добавить" successText="Контрагент добавлен и проверен: признаков риска не найдено."
+        onClose={() => setAdd(false)} ping={ctx.ping} />}
+    </SectionShell>
+  )
+}
+
 /* ═══ Управление бизнесом: CRM и клиенты + Заказы под одной крышей ═══ */
 function BusinessHub({ ctx }) {
   const [tab, setTab] = useState('crm')
@@ -1936,7 +2190,7 @@ function PromotionHub({ ctx }) {
 
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
-  business: BusinessHub,
+  business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners,
   analytics: Analytics, growth: PromotionHub, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
