@@ -15,6 +15,7 @@ import {
 import { PromoCabinet } from './promo'
 import { ScalingCabinet } from './geo'
 import { BizCabinet } from './biz'
+import { TaxCabinet } from './tax'
 
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
 
@@ -2189,7 +2190,7 @@ const REGISTRY = {
   mail: Mail, max: Max, calendar: CalendarSec,
   loyalty: Loyalty, xpay: Xpay, one: One, team: Team, connect: ConnectHub,
   payments: Payments, cards: Cards, acquiring: Acquiring,
-  credits: Credits, deposits: Deposits, guarantees: Guarantees, accounting: Accounting,
+  credits: Credits, deposits: Deposits, guarantees: Guarantees, accounting: TaxCabinet,
   documents: Documents, settings: Settings, tasks: Tasks,
 }
 

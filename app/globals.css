@@ -1698,3 +1698,44 @@ input, select, textarea { font-family: inherit; outline: none; }
   .bz-help { display: none; }
   .bz-kpis { grid-template-columns: 1fr 1fr !important; }
 }
+
+/* ══════════ Онлайн-бухгалтерия (Налоги и бухгалтерия) ══════════ */
+.tx-pay { background: linear-gradient(135deg, #8F8FFF, #4534B8); color: #fff; border-radius: 16px; padding: 20px 22px; }
+.tx-pay .l { font-size: 12.5px; opacity: .82; }
+.tx-pay .v { font-size: 30px; font-weight: 800; line-height: 38px; margin: 2px 0; }
+.tx-pay .d { font-size: 13.5px; opacity: .9; margin-bottom: 14px; }
+.tx-pay-btn { height: 40px; padding: 0 16px; border-radius: 10px; background: #fff; color: #35289C; font-size: 13.5px; font-weight: 600; }
+.tx-pay-btn.ghost { background: rgba(255,255,255,.16); color: #fff; }
+.tx-pay .note2 { margin-top: 16px; font-size: 12.5px; opacity: .9; }
+.tx-prog { height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; margin: 8px 0 6px; }
+.tx-prog i { display: block; height: 100%; border-radius: 4px; background: var(--red); }
+.tx-cal { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.tx-cal:last-child { border-bottom: none; }
+.tx-cal-d { width: 52px; min-width: 52px; text-align: center; background: var(--bg); border-radius: 10px; padding: 5px 0; }
+.tx-cal-d b { display: block; font-size: 16px; font-weight: 800; line-height: 20px; }
+.tx-cal-d span { font-size: 10.5px; color: var(--gray); text-transform: uppercase; }
+.tx-cal-b b { display: block; font-size: 13px; font-weight: 600; }
+.tx-cal-b span { font-size: 12.5px; color: var(--gray); }
+.tx-risk { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
+.tx-risk .nm { flex: 1; min-width: 0; }
+.tx-risk .nm em { display: block; font-style: normal; font-size: 11.5px; color: var(--gray); }
+.tx-risk .sc { width: 110px; min-width: 80px; height: 7px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.tx-risk .sc i { display: block; height: 100%; border-radius: 4px; }
+.tx-risk .vl { width: 70px; text-align: right; font-size: 12px; color: var(--gray); }
+.tx-risk.big { padding: 9px 0; border-bottom: 1px solid var(--line); }
+.tx-risk.big:last-child { border-bottom: none; }
+.tx-gauge { text-align: center; padding: 6px 0 2px; }
+.tx-gauge b { display: block; font-size: 34px; font-weight: 800; line-height: 40px; }
+.tx-gauge span { font-size: 12.5px; color: var(--gray); }
+.tx-doct { display: flex; flex-direction: column; gap: 2px; background: var(--bg); border-radius: 12px; padding: 12px 14px; cursor: pointer; margin-bottom: 10px; transition: background .12s; }
+.tx-doct:hover { background: color-mix(in srgb, var(--bg) 70%, var(--line)); }
+.tx-doct b { font-size: 13px; font-weight: 600; }
+.tx-doct span { font-size: 12px; color: var(--gray); }
+.tx-doct.sm { padding: 9px 12px; margin-bottom: 8px; }
+.tx-chat { max-width: 84%; border-radius: 14px; padding: 10px 14px; font-size: 13px; line-height: 20px; margin-bottom: 10px; }
+.tx-chat.op { background: var(--bg); }
+.tx-chat.me { background: color-mix(in srgb, var(--red) 16%, var(--card)); margin-left: auto; }
+.tx-note { background: color-mix(in srgb, #f0862a 9%, var(--card)); border: 1px solid color-mix(in srgb, #f0862a 30%, var(--card)); border-radius: 12px; padding: 11px 14px; font-size: 12.5px; line-height: 19px; }
+.tx-check { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.tx-check:last-child { border-bottom: none; }
+.tx-check span { width: 17px; height: 17px; min-width: 17px; border-radius: 5px; border: 1.6px solid var(--gray-light); margin-top: 1px; }
