@@ -23,17 +23,16 @@ export const NAV = [
     section: 'Сервисы',
     items: [
       { id: 'services', label: 'Сервисы для бизнеса', icon: 'segments' },
-      { id: 'loyalty', label: 'Клуб друзей', icon: 'people', badge: 'Новое', badgeClass: 'purple' },
-      { id: 'one', label: 'МТС One', icon: 'phone', badge: 'Новое', badgeClass: 'purple' },
     ],
   },
   {
     section: 'Финансы',
     items: [
+      { id: 'accounts', label: 'Счета и выписки', icon: 'accounts' },
       { id: 'payments', label: 'Финансы', icon: 'accounts' },
       { id: 'acquiring', label: 'Приём оплаты', icon: 'acquiring' },
       { id: 'credits', label: 'Деньги на развитие', icon: 'credits' },
-      { id: 'accounting', label: 'Налоги и отчётность', icon: 'accounting' },
+      { id: 'accounting', label: 'Налоги и бухгалтерия', icon: 'accounting' },
       { id: 'statements', label: 'Выписки и отчёты', icon: 'documents' },
     ],
   },
@@ -41,7 +40,6 @@ export const NAV = [
     section: 'Прочее',
     items: [
       { id: 'connect', label: 'Подключение сервисов', icon: 'settings' },
-      { id: 'team', label: 'Команда и роли', icon: 'clients' },
       { id: 'settings', label: 'Настройки', icon: 'settings' },
     ],
   },
@@ -93,7 +91,7 @@ export const ROLES = [
   { role: 'Владелец', person: 'Виталий Сиванев', tool: 'Весь кабинет', toolTo: 'home', status: ['Активен', 'green'], note: 'Полный доступ, настройка ролей и приглашения' },
   { role: 'Клиентский менеджер', person: 'Мария Орлова', tool: 'CRM салона', toolTo: 'crm', status: ['Активна', 'green'], note: 'Клиенты, сегменты и история визитов' },
   { role: 'Администратор ресепшена', person: 'Игорь Тарасов', tool: 'Заказы', toolTo: 'orders', status: ['Активен', 'green'], note: 'Запись клиентов и подтверждение визитов' },
-  { role: 'Бухгалтер', person: 'Ольга Николаевна', tool: 'Налоги и отчётность', toolTo: 'accounting', status: ['Активна', 'green'], note: 'Налоги, документы и движение денег' },
+  { role: 'Бухгалтер', person: 'Ольга Николаевна', tool: 'Налоги и бухгалтерия', toolTo: 'accounting', status: ['Активна', 'green'], note: 'Налоги, документы и движение денег' },
   { role: 'Курьер', person: '2 сотрудника', tool: 'Доставка и приём оплаты', toolTo: 'acquiring', status: ['Активны', 'green'], note: 'Маршрут заказа и оплата на месте' },
   { role: 'Маркетолог', person: 'не назначен', tool: 'Привлечение и рассылки', toolTo: 'growth', status: ['Пригласить', 'blue'], note: 'Кампании, акции и сегменты' },
   { role: 'Мастера · смена', person: 'Ирина + 3 мастера', tool: 'Мои дела', toolTo: 'calendar', status: ['Активны', 'green'], note: 'Расписание смен и дела дня' },

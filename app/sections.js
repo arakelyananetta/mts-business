@@ -933,7 +933,7 @@ function Payments({ ctx }) {
       <div className="fin-grid">
         {[
           { to: 'acquiring', emoji: '🏪', name: 'Приём оплаты', value: '58 300 ₽ сегодня', note: 'комиссия 1,1% · курьерский терминал офлайн', alert: true },
-          { to: 'accounting', emoji: '🧾', name: 'Налоги и отчётность', value: '18 675 ₽ до 25 августа', note: 'аванс УСН — оплата в один клик', alert: true },
+          { to: 'accounting', emoji: '🧾', name: 'Налоги и бухгалтерия', value: '18 675 ₽ до 25 августа', note: 'аванс УСН — оплата в один клик', alert: true },
           { to: 'cards', emoji: '💳', name: 'Карты', value: 'МИР Supreme · активна', note: 'кэшбэк 3% — 3 552 ₽ за август · лимит 500 000 ₽' },
           { to: 'xpay', emoji: '⚡', name: 'Мгновенные переводы', value: 'комиссия 0,3%', note: 'оплата по QR — деньги приходят сразу' },
           { to: 'deposits', emoji: '💰', name: 'Накопления', value: 'до 19,5% годовых', note: 'свободные 2 456 780 ₽ могут приносить доход' },
@@ -1288,7 +1288,7 @@ function Guarantees({ ctx }) {
 function Accounting({ ctx }) {
   const [form, setForm] = useState(false)
   return (
-    <SectionShell title="Налоги и отчётность" sub="Все налоги ИП на УСН 6% — под контролем" ctx={ctx}
+    <SectionShell title="Налоги и бухгалтерия" sub="Все налоги ИП на УСН 6% — под контролем" ctx={ctx}
       actions={<button className="btn-red" style={{ marginTop: 0 }} onClick={() => setForm(true)}>Оплатить налог</button>}>
       <StatRow stats={[
         ['Доход за 2 квартал', '3 112 500 ₽', 'по данным ваших финансов'],
@@ -2160,6 +2160,20 @@ function Partners({ ctx }) {
   )
 }
 
+/* ═══ Счета и выписки: движение денег + выписки под одной крышей ═══ */
+function AccountsHub({ ctx }) {
+  const [tab, setTab] = useState('pay')
+  return (
+    <div>
+      <div className="seg-tabs hub-tabs">
+        <button className={tab === 'pay' ? 'active' : ''} onClick={() => setTab('pay')}>Счета</button>
+        <button className={tab === 'st' ? 'active' : ''} onClick={() => setTab('st')}>Выписки</button>
+      </div>
+      {tab === 'pay' ? <Payments ctx={ctx} /> : <Statements ctx={ctx} />}
+    </div>
+  )
+}
+
 /* ═══ Управление бизнесом: CRM и клиенты + Заказы под одной крышей ═══ */
 function BusinessHub({ ctx }) {
   const [tab, setTab] = useState('crm')
@@ -2190,7 +2204,7 @@ function PromotionHub({ ctx }) {
 
 const REGISTRY = {
   crm: Crm, orders: Orders, clients: Clients, segments: Segments, comms: Comms,
-  business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners,
+  business: BusinessHub, statements: Statements, docflow: Docflow, partners: Partners, accounts: AccountsHub,
   analytics: Analytics, growth: PromotionHub, promos: Promos, services: Services, premium: Premium,
   mkt: MktAnalytics, audience: Audience,
   mail: Mail, max: Max, calendar: CalendarSec,
