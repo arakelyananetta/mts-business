@@ -16,6 +16,7 @@ import { PromoCabinet } from './promo'
 import { ScalingCabinet } from './geo'
 import { BizCabinet } from './biz'
 import { TaxCabinet } from './tax'
+import { WeekPlanner } from './week'
 
 const chip = ([label, cls], key) => <span key={key || label} className={`chip ${cls}`}>{label}</span>
 
@@ -1456,8 +1457,9 @@ function Tasks({ ctx }) {
     setText('')
   }
   return (
-    <SectionShell title="Мои дела" sub="Планы по бизнесу — ничего не потеряется" ctx={ctx}
+    <SectionShell title="Мои дела" sub="Встречи недели и планы по бизнесу — ничего не потеряется" ctx={ctx}
       actions={<button className="btn-gray" style={{ width: 'auto' }} onClick={() => ctx.go('calendar')}>Календарь →</button>}>
+      <WeekPlanner ctx={ctx} />
       <div className="card" style={{ marginTop: 18 }}>
         <div className="crm-controls" style={{ marginTop: 0 }}>
           <div className="input-search">
@@ -1667,7 +1669,7 @@ function CalendarSec({ ctx }) {
               <h3 className="block-title" style={{ fontSize: 16 }}>Умные напоминания</h3>
               <ul className="promo-list" style={{ maxWidth: 'none', marginTop: 12 }}>
                 <li><span className="check">✓</span>Напомню о налоге УСН за 3 дня до срока — и предложу оплатить в один клик.</li>
-                <li><span className="check">✓</span>Заказы с датой выдачи сами появляются в расписании кухни.</li>
+                <li><span className="check">✓</span>Заказы с датой выдачи сами появляются в расписании салона.</li>
                 <li><span className="check">✓</span>Задачи из раздела «Задачи» и события календаря — всегда в одном списке.</li>
               </ul>
             </div>
